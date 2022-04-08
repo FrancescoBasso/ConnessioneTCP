@@ -6,6 +6,7 @@
 package connessionetcp;
 
 import java.io.IOException;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +21,7 @@ public class ConnessioneTCP {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
         
            int port =2000;
@@ -42,10 +43,13 @@ public class ConnessioneTCP {
            
             socket = sSocket.accept();
             System.out.println("Server connesso con il client"+ socket.getRemoteSocketAddress());
+            
+            socket.getInputStream();
+            socket.getOutputStream();
             //3
-        } catch (IOException ex) {
-            System.err.println("Errore di I/O  nell'istanza");
-            Logger.getLogger(Socket.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (BindException ex) {
+            System.err.println("Server già avviato");
+            Logger.getLogger(ConnessioneTCP.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally{
              try {
@@ -55,7 +59,7 @@ public class ConnessioneTCP {
                 }
                 
             } catch (IOException ex) {
-                Logger.getLogger(Socket.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ConnessioneTCP.class.getName()).log(Level.SEVERE, null, ex);
             }
         
         }
